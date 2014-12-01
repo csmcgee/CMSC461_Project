@@ -2,6 +2,10 @@ package csm.views;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SpringLayout;
+import javax.swing.WindowConstants;
+
+import csm.utilities.SpringUtilities;
 
 /**
  * Main view which gives the user the option to select
@@ -29,7 +33,7 @@ public class MainView extends AbstractView{
 	public MainView() {
 		super(title);
 		
-		container = new JPanel();
+		container = new JPanel(new SpringLayout());
 		
 		studentBtn = new JButton("Student");
 		customerServiceBtn = new JButton("Customer Service");
@@ -40,7 +44,9 @@ public class MainView extends AbstractView{
 		addToPanel(container, studentBtn, customerServiceBtn,
 				adminBtn, superAdminBtn, reportsBtn);
 		add(container);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
+		SpringUtilities.makeGrid(container, 5, 1, 15, 5, 5, 10);
 		buildView();
 	}
 	

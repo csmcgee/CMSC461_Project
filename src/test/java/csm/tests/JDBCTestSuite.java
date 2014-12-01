@@ -18,7 +18,7 @@ public class JDBCTestSuite extends TestCase{
 	public void setUp(){
  		try 
  		{
- 		    String dburl="jdbc:mysql://localhost/"+database+"?user="+username+"&password="+password;
+ 		  String dburl="jdbc:mysql://localhost/"+database+"?user="+username+"&password="+password;
  			connection = DriverManager.getConnection( dburl, username,password); 
  		} 
 	    catch (SQLException e) 

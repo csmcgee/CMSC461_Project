@@ -5,9 +5,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import csm.views.AbstractView;
 import csm.views.MainView;
 
-public class MainController {
+public class MainController extends AbstractController {
 	private final MainView mainView = new MainView();
 	
 	private static MainController instance = null;
@@ -28,27 +29,30 @@ public class MainController {
 			.addActionListener(getStudentAction());
 		
 	}
-	
-	private void setUp(){
-		mainView.setVisible(true);
-	}
-	
-	private void tearDown(){
-		mainView.setVisible(false);
-	}
+	  
 	private ActionListener getStudentAction(){
 		return new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				tearDown();
+				tearDownView();
 				
-				new StudentMenuController().setWindowCloseEvent(new WindowAdapter(){
-					public void windowClosing(WindowEvent event){
-						System.out.println("Closing");
-						setUp();
-					}
-				});
+				StudentMenuController sController = new StudentMenuController();
+				
+				/**
+				 * Set close event to re-open main menu.
+				 */
+				sController.setWindowCloseEvent(new WindowAdapter(){
+          public void windowClosing(WindowEvent event){
+            setUpView();
+          }
+        });
+				
 			}		
 		};
 	}
+
+  @Override
+  public AbstractView getView() {
+    return mainView;
+  }
 	
 }
