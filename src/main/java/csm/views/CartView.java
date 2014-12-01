@@ -219,4 +219,8 @@ public class CartView extends AbstractView{
     return shippingField;
   }
 
+public JButton getSearchBtn() {
+	return searchBtn;
+}
+
 }
