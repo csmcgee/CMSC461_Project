@@ -1,9 +1,12 @@
 package csm.models;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
+import csm.classes.Course;
 import csm.classes.University;
 import csm.utilities.DAO;
 
@@ -70,5 +73,28 @@ public class UniversityModel {
 		}
 		return -1;
 	}
-
+	
+	public static ArrayList<Course> getUniversityCourseList(int id){
+		ResultSet rs = null;
+		ArrayList<Course> courses = new ArrayList<Course>();
+		try {
+			Connection con = DAO.getInstance().getConnection();
+			Statement stmt = con.createStatement();
+			String sql = "select * from course where id in "
+					+ "(select course_id from instructor_teaches natural join "
+					+ "university_instructor "
+					+ "where university_id = " + id + ");";
+			rs = stmt.executeQuery(sql);
+			while(rs.next()){
+				courses.add(new Course(rs.getInt(1), rs.getString(2)));
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return courses;
+		
+	}
 }

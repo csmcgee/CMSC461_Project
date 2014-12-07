@@ -121,10 +121,31 @@ public class StudentCartModel {
   }
   
   /**
-   * Returns true when avaialble.
+   * Returns true when available.
    */
   private static boolean checkBookAvailability(String ISBN, 
       String type, String status, String format){
     return true;
   }
+
+public static ResultSet getRequiredBooks(int universityId, int courseId,
+		int semesterId, int sectionId, int year) {
+    Connection con = DAO.getInstance().getConnection();
+    Statement stmt = null;
+    ResultSet rs = null;
+    try {
+		stmt = con.createStatement();
+		String sql = "select ISBN, title, type, status, format, price, quantity "
+				+ "from required_book natural join book natural join inventory "
+				+ "where course_id=" + courseId + " and "
+				+ "section_id=" + sectionId + " and "
+				+ "year=" + year + " and "
+				+ "semester_id=" + semesterId + ";";
+		rs = stmt.executeQuery(sql);
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return rs;
+}
 }

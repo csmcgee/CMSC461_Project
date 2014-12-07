@@ -58,7 +58,7 @@ public class CartBooksModelView extends AbstractTableModel{
     studentId = id;
   }
   
-  private ResultSet constructResultSet(){
+  protected ResultSet constructResultSet(){
     try {
       return StudentCartModel.getStudentCart(studentId);
     } catch (SQLException e) {
